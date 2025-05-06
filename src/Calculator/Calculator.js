@@ -1,5 +1,22 @@
-import React, { useState } from 'react';
-import { TextField, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import {
+  TextField,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel
+} from '@mui/material';
+import axios from 'axios';
+
+const currenciesList = ['USD', 'INR', 'EUR', 'GBP', 'JPY', 'CAD'];
 
 function Calculator() {
   const [principal, setPrincipal] = useState('');
@@ -7,8 +24,11 @@ function Calculator() {
   const [termYears, setTermYears] = useState('');
   const [schedule, setSchedule] = useState([]);
   const [monthlyEMI, setMonthlyEMI] = useState(null);
+  const [showOptions, setShowOptions] = useState(false);
+  const [currency, setCurrency] = useState('INR');
+  const [conversionRate, setConversionRate] = useState(1);
 
-  const calculateEMI = () => {
+  const calculateEMI = async () => {
     const P = parseFloat(principal);
     const r = parseFloat(interestRate) / 12 / 100;
     const N = parseFloat(termYears) * 12;
@@ -16,23 +36,62 @@ function Calculator() {
     const emi = (P * r * Math.pow(1 + r, N)) / (Math.pow(1 + r, N) - 1);
     setMonthlyEMI(emi.toFixed(2));
 
-    // Generate amortization schedule
-    const scheduleData = [];
     let balance = P;
+    const scheduleData = [];
+
     for (let i = 1; i <= N; i++) {
       const interest = balance * r;
       const principalPaid = emi - interest;
       balance -= principalPaid;
       scheduleData.push({
         month: i,
-        principal: principalPaid.toFixed(2),
-        interest: interest.toFixed(2),
-        balance: balance > 0 ? balance.toFixed(2) : 0,
+        principal: principalPaid,
+        interest: interest,
+        balance: balance > 0 ? balance : 0,
       });
     }
 
     setSchedule(scheduleData);
+    setShowOptions(true);
+    fetchConversionRate(currency); // Default conversion
   };
+
+  const resetTable = () => {
+    setMonthlyEMI(null);
+    setSchedule([]);
+    setShowOptions(false);
+    setCurrency('INR');
+    setConversionRate(1);
+  };
+
+  const fetchConversionRate = async (selectedCurrency) => {
+    try {
+      // INR is the base currency, so no need to convert
+      if (selectedCurrency === 'INR') {
+        setConversionRate(1);
+        return;
+      }
+  
+      const response = await axios.get(
+        `https://v6.exchangerate-api.com/v6/9227d91a91dedb900c105fe0/latest/INR`
+      );
+  
+      const rate = response.data.conversion_rates[selectedCurrency];
+      setConversionRate(rate || 1);
+    } catch (error) {
+      console.error('Error fetching exchange rate:', error);
+      setConversionRate(1);
+    }
+  };
+  
+
+  const handleCurrencyChange = (e) => {
+    const selected = e.target.value;
+    setCurrency(selected);
+    fetchConversionRate(selected);
+  };
+
+  const convert = (amount) => (amount * conversionRate).toFixed(2);
 
   return (
     <div style={{ padding: 20 }}>
@@ -62,11 +121,28 @@ function Calculator() {
         CALCULATE
       </Button>
 
-      {monthlyEMI && (
+      {showOptions && (
         <>
-          <h3 style={{ marginTop: 20 }}>Monthly EMI: ${monthlyEMI}</h3>
+          <h3 style={{ marginTop: 20 }}>
+            Monthly EMI: {currency} {convert(monthlyEMI)}
+          </h3>
 
-          <TableContainer component={Paper}>
+          <FormControl style={{ minWidth: 120, marginBottom: 10 }}>
+            <InputLabel>Currency</InputLabel>
+            <Select value={currency} onChange={handleCurrencyChange}>
+              {currenciesList.map((cur) => (
+                <MenuItem key={cur} value={cur}>
+                  {cur}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <Button variant="outlined" color="secondary" onClick={resetTable} style={{ float: 'right' }}>
+            RESET TABLE
+          </Button>
+
+          <TableContainer component={Paper} style={{ marginTop: 20 }}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -80,9 +156,9 @@ function Calculator() {
                 {schedule.map((row) => (
                   <TableRow key={row.month}>
                     <TableCell>{row.month}</TableCell>
-                    <TableCell>{row.principal} INR</TableCell>
-                    <TableCell>{row.interest} INR</TableCell>
-                    <TableCell>{row.balance} INR</TableCell>
+                    <TableCell>{convert(row.principal)} {currency}</TableCell>
+                    <TableCell>{convert(row.interest)} {currency}</TableCell>
+                    <TableCell>{convert(row.balance)} {currency}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
