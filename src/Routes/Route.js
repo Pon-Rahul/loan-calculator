@@ -10,9 +10,6 @@ function AllRoutes() {
      <Route path="/" element={<Calculator />} />
      <Route path="/error" element={<ErrorPage />} />
      <Route path="/exchange" element={<ExchangeRates />} />
-       {/*<Route path="/about" element={<About />} />
-      <Route path="/exchange" element={<div>Exchange Rates Page</div>} />
-      <Route path="*" element={<ErrorPage />} />*/}
     </Routes> 
   );
 }

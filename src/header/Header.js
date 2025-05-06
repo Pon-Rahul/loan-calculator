@@ -10,7 +10,6 @@ function Header({ onToggleTheme }) {
       <nav className="nav-links">
         <Link to="/">Home</Link>
         <Link to="/exchange">Exchange Rates (Live)</Link>
-        <Link to="/about">About</Link>
         <Link to="/error">ErrorPage</Link>
         <Switch onChange={onToggleTheme} />
       </nav>
