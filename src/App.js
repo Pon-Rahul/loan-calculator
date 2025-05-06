@@ -1,14 +1,21 @@
+// App.js
+import React, { useState } from 'react';
 import './App.css';
-import { BrowserRouter as Router } from 'react-router-dom';
 import Header from './header/Header';
 import AllRoutes from './Routes/Route';
 
 function App() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
   return (
-    <Router>
-      <Header />
+    <div className={darkMode ? 'app dark-mode' : 'app'}>
+      <Header onToggleTheme={toggleDarkMode} />
       <AllRoutes />
-    </Router>
+    </div>
   );
 }
 

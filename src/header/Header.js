@@ -1,14 +1,8 @@
 import "./Header.css";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Switch } from '@mui/material';
 
-function Header() {
-  const [toggle, setToggle] = useState(false);
-
-  const handleToggle = () => {
-    setToggle(!toggle);
-    console.log("Slider toggled:", !toggle); // You can later connect this to theme
-  };
+function Header({ onToggleTheme }) {
 
   return (
     <header className="app-header">
@@ -17,12 +11,8 @@ function Header() {
         <Link to="/">Home</Link>
         <Link to="/exchange">Exchange Rates (Live)</Link>
         <Link to="/about">About</Link>
-        <div className="slider-container">
-          <label className="switch">
-            <input type="checkbox" onChange={handleToggle} />
-            <span className="slider round"></span>
-          </label>
-        </div>
+        <Link to="/error">ErrorPage</Link>
+        <Switch onChange={onToggleTheme} />
       </nav>
     </header>
   );
