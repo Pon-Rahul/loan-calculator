@@ -1,56 +1,74 @@
 .exchange-container {
-    padding: 2rem;
-    color: #333;
-    text-align: center;
-  }
-  
-  .exchange-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-  }
-  
-  .exchange-table th,
-  .exchange-table td {
-    border: 1px solid #ccc;
-    padding: 0.75rem;
-  }
-  
-  .exchange-table th {
-    background-color: #f8f8f8;
-  }
-  
-  .pagination-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1.5rem;
-    flex-wrap: wrap;
-  }
-  
-  .rows-selector {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  
-  .page-controls {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  
-  .page-controls button {
-    padding: 0.4rem 0.7rem;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .page-controls button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
+  padding: 2rem;
+  text-align: center;
+}
+
+.exchange-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.exchange-table th,
+.exchange-table td {
+  border: 1px solid #ccc;
+  padding: 0.75rem;
+}
+
+.exchange-table th {
+  background-color: #f8f8f8;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.rows-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.page-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.page-controls button {
+  padding: 0.4rem 0.7rem;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.page-controls button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.dark-mode .exchange-table th,
+.dark-mode .exchange-table td {
+  background-color: #2a2a2a;
+  color: #fff;
+  border: 1px solid #444;
+}
+
+.dark-mode .exchange-table {
+  background-color: #2a2a2a;
+}
+
+.dark-mode .page-controls button {
+  background-color: #555;
+  color: white;
+}
+
+.dark-mode .page-controls button:disabled {
+  background-color: #777;
+}

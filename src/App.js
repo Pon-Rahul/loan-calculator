@@ -1,4 +1,3 @@
-// App.js
 import React, { useState } from 'react';
 import './App.css';
 import Header from './header/Header';
@@ -14,7 +13,7 @@ function App() {
   return (
     <div className={darkMode ? 'app dark-mode' : 'app'}>
       <Header onToggleTheme={toggleDarkMode} />
-      <AllRoutes />
+      <AllRoutes darkMode={darkMode} />
     </div>
   );
 }

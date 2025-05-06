@@ -1,24 +1,58 @@
 .app {
-  background-color: #f0f0f0;
+  background-color: #fff;
   color: #000;
+  min-height: 100vh;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .dark-mode {
   background-color: #1a1a1a;
   color: #fff;
 }
+select {
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
 
 .dark-mode input,
-.dark-mode select,
+.dark-mode select {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #555;
+  border-radius: 4px;
+}
+
 .dark-mode table {
+  background-color: #2a2a2a;
+  color: #fff;
+}
+
+.dark-mode th,
+.dark-mode td {
   background-color: #2a2a2a;
   color: #fff;
 }
 
 .dark-mode .btn,
 .dark-mode .header,
-.dark-mode .card {
+.dark-mode .card,
+.dark-mode .app-header,
+.dark-mode .exchange-table {
   background-color: #333;
   color: #fff;
   border-color: #555;
+}
+.dark-mode .pagination-container{
+  color: #fff;
+  border-color: #555;
+}
+
+.dark-mode .nav-links a {
+  color: #fff;
+}
+
+.dark-mode .exchange-table th,
+.dark-mode .exchange-table td {
+  border-color: #444;
 }

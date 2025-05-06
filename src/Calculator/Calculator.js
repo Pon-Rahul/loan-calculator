@@ -53,7 +53,7 @@ function Calculator() {
 
     setSchedule(scheduleData);
     setShowOptions(true);
-    fetchConversionRate(currency); // Default conversion
+    fetchConversionRate(currency);
   };
 
   const resetTable = () => {
@@ -66,7 +66,6 @@ function Calculator() {
 
   const fetchConversionRate = async (selectedCurrency) => {
     try {
-      // INR is the base currency, so no need to convert
       if (selectedCurrency === 'INR') {
         setConversionRate(1);
         return;

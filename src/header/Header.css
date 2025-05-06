@@ -1,10 +1,9 @@
-/* existing styles... */
 
 .slider-container {
     margin-left: 20px;
   }
   .app-header {
-    background-color: #1976d2; /* Material UI blue */
+    background-color: #1976d2; 
     color: white;
     padding: 10px 20px;
     display: flex;
